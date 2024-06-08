@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using mebel.ViewModels
+
+@inject SignInManager<User> SignInManager
+
+@model DetailFurnitureViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+
+    <h1 class="my-4">
+        @Model.furniture.Name
+    </h1>
+
+    <div class="row">
+
+        <div class="col-md-8">
+            <img width="600" height="400" class="img-fluid" src="@Model.furniture.ImageUrl" alt="">
+        </div>
+
+        <div class="col-md-4">
+            <button type="button" disabled="true" class="btn btn-sm btn-outline-secondary">@Model.furniture.Category.ToString()</button>
+            <p>Opis produktu:</p>
+            <p>@Model.furniture.Tag</p>
+            <h3 class="my-3">@(Model.furniture.Price)zł</h3>
+            @if (@Model.furniture.UserId == SignInManager.Context.User.GetUserId())
+            {
+                <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Furniture" asp-action="Edit" asp-route-id="@Model.furniture.Id">Edytuj</a>
+                <a type="button" class="btn btn-sm btn-danger" asp-controller="Furniture" asp-action="Delete" asp-route-id="@Model.furniture.Id">Usuń</a>
+            }
+            <a href="mailto: @Model.furniture.User.Email" type="button" class="btn btn-sm btn-outline-secondary">@Model.furniture.User.Email</a>
+        </div>
+
+    </div>
+
+    @if (Model.relatedFurnitures.Count() != 0)
+    {
+        <h3 class="my-4">Podobne meble</h3>
+
+        <div class="row">
+            @foreach (Furniture item in Model.relatedFurnitures)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img width="300" height="200" class="card-img-top" src="@item.ImageUrl" alt="@item.Name">
+                        <div class="card-body">
+                            <p class="card-text">@item.Name</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" disabled="true" class="btn btn-sm btn-outline-secondary">@item.Category.ToString()</button>
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Furniture" asp-action="Detail" asp-route-id="@item.Id">Sprawdź</a>
+                                </div>
+                                <small class="text-muted">@(item.Price)zł</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

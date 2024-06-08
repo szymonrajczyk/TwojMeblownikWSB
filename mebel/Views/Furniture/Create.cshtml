@@ -1,0 +1,45 @@
+﻿@using mebel.Data
+@using mebel.ViewModels
+
+@model CreateFurnitureViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form method="post" asp-action="Create">
+    <input type="hidden" id="UserId" name="UserId" asp-for="UserId"/>
+    <div class="form-group">
+        <label asp-for="Name">Nazwa</label>
+        <input asp-for="Name" class="form-control" placeholder="Dodaj nazwę">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tag">Opis</label>
+        <input asp-for="Tag" class="form-control" placeholder="Dodaj opis">
+        <span asp-validation-for="Tag" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl">Link do zdjęcia</label>
+        <input asp-for="ImageUrl" class="form-control" placeholder="Dodaj link do zdjęcia">
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price">Cena</label>
+        <input type="number" min="0" step="0.01" asp-for="Price" class="form-control" placeholder="Dodaj cenę">
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-row form-group">
+        <div class="col">
+            <label asp-for="Category">Kategoria</label>
+
+            <select asp-for="Category" asp-items="@Html.GetEnumSelectList<FurnitureCategory>()" class="form-control">
+                <option>--Wybierz--</option>
+            </select>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>

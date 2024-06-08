@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Furniture>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+    <div class="row">
+        <h1 style="text-align: center; margin: 0 auto">TWÓJ MEBLOWNIK</h1><br />
+        <p style="margin-top: 50px;">
+            Twój Meblownik to unikalna platforma, gdzie użytkownicy sami mogą dodawać, edytować i sprzedawać swoje meble. Jesteśmy miejscem, które łączy miłośników wnętrz z pasjonatami designu oraz osobami, które chcą sprzedać lub wymienić swoje używane meble. Nasza strona to połączenie funkcjonalności, stylu i społecznościowej współpracy.<br>
+            Jak to działa? <br />
+            1. <b>Rejestracja</b><br />
+            Załóż konto w kilka prostych kroków i dołącz do naszej społeczności.<br />
+            2. <b>Dodawanie mebli</b><br />
+            Przejrzysty interfejs umożliwia szybkie dodanie mebli na sprzedaż.
+            Dodaj zdjęcia oraz opis, aby potencjalni kupujący mogli dokładnie obejrzeć Twoją ofertę.<br />
+            3. <b>Przeglądanie ofert</b><br />
+            Przeglądaj oferty dodane przez innych użytkowników.<br />
+            4. <b>Transakcje</b><br />
+            Skontaktuj się z innymi użytkownikami poprzez email ze sprzedającym.
+            Ustal warunki sprzedaży, odbioru lub wysyłki mebli.
+        </p>
+        @if (Model.Count() == 0)
+        {
+            <h2>Użytkownicy nie dodali jeszcze żadnych mebli!</h2>
+        }
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <img width="300" height="200" class="card-img-top" src="@item.ImageUrl" alt="@item.Name">
+                    <div class="card-body">
+                        <p class="card-text">@item.Name</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                               <button type="button" disabled="true" class="btn btn-sm btn-outline-secondary">@item.Category.ToString()</button>
+                                <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Furniture" asp-action="Detail" asp-route-id="@item.Id">Sprawdź</a>
+                            </div>
+                            <small class="text-muted">@(item.Price)zł</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
